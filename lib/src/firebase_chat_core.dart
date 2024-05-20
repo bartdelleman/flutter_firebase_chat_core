@@ -54,6 +54,7 @@ class FirebaseChatCore {
     Map<String, dynamic>? metadata,
     required String name,
     required List<types.User> users,
+    required String groupId,
   }) async {
     if (firebaseUser == null) return Future.error('User does not exist');
 
@@ -68,7 +69,8 @@ class FirebaseChatCore {
 
     final room = await getFirebaseFirestore()
         .collection(config.roomsCollectionName)
-        .add({
+        .doc(groupId)
+        .set({
       'createdAt': FieldValue.serverTimestamp(),
       'imageUrl': imageUrl,
       'metadata': metadata,
